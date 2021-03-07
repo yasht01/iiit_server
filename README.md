@@ -1,2 +1,2 @@
-# IIIT server
-Backend server code.
+# IIIT Server
+Backend server code
