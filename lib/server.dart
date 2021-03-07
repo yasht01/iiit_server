@@ -104,6 +104,18 @@ void start() async {
   ]);
 
   //SHOW DEPARTMENT PAGE
+  // -----------------------
+  // Request params: ?dept:[input_dept]
+  // Response:
+  // .json(
+  //   {
+  //    'profList': profList,
+  //    'AprofList': AprofList,
+  //    'phdList': phdList,
+  //    'resourcesList': resourcesList
+  //   }
+  // )
+
   serv.get('/department', [
     (ServRequest req, ServResponse res) async {
       var profList = prof.find(where.eq('dept', req.body['dept'])).toList();
@@ -113,12 +125,13 @@ void start() async {
           resources.find(where.eq('dept', req.body['dept'])).toList();
       return res.status(200).json({
         'profList': profList,
-        'ArofList': AprofList,
+        'AprofList': AprofList,
         'phdList': phdList,
         'resourcesList': resourcesList
       });
     }
   ]);
+  // ---------------------
 
   //SHOW PROF/APROF/PHD/RESOURCES PAGE
   serv.get('/listPage/:type', [
