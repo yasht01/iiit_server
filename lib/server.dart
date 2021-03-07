@@ -37,19 +37,32 @@ void start() async {
   // GET Requests
 
   //LOGIN
+  // ------------------------
+  // request parameters:
+  // ?username=[input_username]
+  //
+  // response parameters:
+  // .json(
+  // {'user_exists': 'Yes/No', 'verified': 'Yes/No'}
+  // )
+
   serv.get('/login', [
     (ServRequest req, ServResponse res) async {
-      print('InLogin');
-      var user = await users.findOne(where.eq('userId', req.body['login']));
+      var user = await users.findOne(where.eq('userId', req.body['username']));
       if (user != null) {
         if (user['password'] == req.body['password']) {
-          return res.status(200).json({'verified': 'Yes'});
+          return res
+              .status(200)
+              .json({'user_exists': 'Yes', 'verified': 'Yes'});
+        } else {
+          return res.status(200).json({'user_exists': 'Yes', 'verified': 'No'});
         }
       } else {
-        return res.status(200).json({'verified': 'No'});
+        return res.status(200).json({'user_exists': 'No', 'verified': 'No'});
       }
     }
   ]);
+  // ------------------------
 
   //SHOW INDIVIDUAL PAGE
   serv.get('/individualPage/:type', [
