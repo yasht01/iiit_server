@@ -1,2 +1,2 @@
-# iiit_server
+# IIIT server
 Backend server code.
