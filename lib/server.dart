@@ -133,7 +133,14 @@ void start() async {
   ]);
   // ---------------------
 
-  //SHOW PROF/APROF/PHD/RESOURCES PAGE
+  // SHOW PROF/APROF/PHD/RESOURCES PAGE
+  // -----------------
+  // Request params: type
+  // Response:
+  // .json(
+  // {'list': 'list'}
+  // )
+
   serv.get('/listPage/:type', [
     (ServRequest req, ServResponse res) async {
       if (req.params['type'] == 'prof') {
@@ -151,6 +158,7 @@ void start() async {
       }
     }
   ]);
+  // ----------------
 
   //USER LIST
   serv.get('/user', [
