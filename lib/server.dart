@@ -219,10 +219,10 @@ void start() async {
       } else if (req.params['type'] == 'resources') {
         await resources.insert({
           'id': req.body['id'],
-          'type': req.body['name'],
+          'type': req.body['type'],
           'dept': req.body['dept'],
-          'capacity': req.body['education'],
-          'LabAsst': req.body['date'],
+          'capacity': req.body['capacity'],
+          'LabAsst': req.body['LabAsst']
         });
       }
       return res.status(200).json({'inserted': 'Ok'});
