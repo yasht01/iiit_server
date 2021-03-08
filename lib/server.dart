@@ -39,7 +39,7 @@ void start() async {
   //LOGIN
   // ------------------------
   // request parameters:
-  // ?username=[input_username]
+  // ?login=[input_username]
   //
   // response parameters:
   // .json(
@@ -48,7 +48,7 @@ void start() async {
 
   serv.get('/login', [
     (ServRequest req, ServResponse res) async {
-      var user = await users.findOne(where.eq('userId', req.body['username']));
+      var user = await users.findOne(where.eq('userId', req.body['login']));
       if (user != null) {
         if (user['password'] == req.body['password']) {
           return res
@@ -65,10 +65,11 @@ void start() async {
   // ------------------------
 
   //SHOW INDIVIDUAL PAGE
+  // ---------------------
+  // Request params:
+
   serv.get('/individualPage/:type', [
-    //NEEDS WORK
     (ServRequest req, ServResponse res) async {
-      print('Insearch');
       if (req.params['type'] == 'prof') {
         var user = await prof.findOne(where.eq('name', req.body['name']));
         if (user != null) {
@@ -91,7 +92,7 @@ void start() async {
           return res.status(200).json({'found': 'false'});
         }
       } else if (req.params['type'] == 'resources') {
-        var user = await resources.findOne(where.eq('name', req.body['name']));
+        var user = await resources.findOne(where.eq('id', req.body['id']));
         if (user != null) {
           return res.status(200).json({'userdata': user});
         } else {
@@ -102,6 +103,7 @@ void start() async {
       }
     }
   ]);
+  // ----------------------
 
   //SHOW DEPARTMENT PAGE
   // -----------------------
@@ -161,12 +163,19 @@ void start() async {
   // ----------------
 
   //USER LIST
+  // ----------------
+  // Response params:
+  // .json(
+  // {'userList': userList}
+  // )
+
   serv.get('/user', [
     (ServRequest req, ServResponse res) async {
       var userList = users.find().toList();
       return res.status(200).json({'userList': userList});
     }
   ]);
+  // ----------------
 
   // POST Requests
 
@@ -182,7 +191,6 @@ void start() async {
       if (req.params['type'] == 'prof') {
         await prof.insert({
           'userId': req.body['login'],
-          //  'password': req.body['password'],
           'name': req.body['name'],
           'dept': req.body['dept'],
           'education': req.body['education'],
@@ -193,7 +201,6 @@ void start() async {
       } else if (req.params['type'] == 'Aprof') {
         await Aprof.insert({
           'userId': req.body['login'],
-          //'password': req.body['password'],
           'name': req.body['name'],
           'dept': req.body['dept'],
           'education': req.body['education'],
@@ -203,7 +210,6 @@ void start() async {
       } else if (req.params['type'] == 'phd') {
         await phd.insert({
           'userId': req.body['login'],
-          // 'password': req.body['password'],
           'name': req.body['name'],
           'dept': req.body['dept'],
           'education': req.body['education'],
@@ -212,6 +218,7 @@ void start() async {
         });
       } else if (req.params['type'] == 'resources') {
         await resources.insert({
+          'id': req.body['id'],
           'type': req.body['name'],
           'dept': req.body['dept'],
           'capacity': req.body['education'],
