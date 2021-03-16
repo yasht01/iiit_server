@@ -9,10 +9,8 @@ Future<void> getAprof() async {
   final response = await http.get(url);
 
   final jsonResponse = json.decode(response.body.toString());
-  print(jsonResponse);
-  final dataList = AprofList.fromJson(jsonResponse['list']);
-  // print("photos " + dataList);
-  print(dataList);
+  final dataList = AprofList.fromJson(jsonResponse['list']).list;
+  print(dataList[0].name);
 }
 
 void main() async {
